@@ -1,7 +1,10 @@
+##CommonJS###
 8_1 => User defined module and how to use a module
 8 => OS Module
 9 => Path Module
 10-12 => File System
+
+##NodeJS###
 Async Patterns => It tells how to avoid Callback hell when reading multiple files(or any other nested task) by using Async await and promise. Async makes the block of code run asyncronously, however a line with await keyword inside async block acts syncronously only within the async block scope[1] untill the promise resolves. [1]-> does not affect other scripts outside the async block
 13-14 => Aboout Event Emitter
 15-17 => Streams

@@ -1,0 +1,38 @@
+#) NPM Version
+npm ---version
+
+#) NPM global: shows list of npm commands
+npm --global
+
+#) Install package.json
+npm init -y
+**Note**
+package.json is a manifest file that stores important information about project and packages being used.
+
+#) Install a local package/Dependency
+npm i <packageName> [eg: npm i lodash]
+
+#) Install a global dependency: use "nodemon app.js", you will see the script will not run because you needed to install nodemon globlly, since node is intalled globaly it can be used like "node app.js"
+npm install -g <packageName>
+
+#) Install a local Dev Dependency
+npm i nodemon -D
+npm i nodemon --save-dev
+
+#) Uninstall a package/Dependency
+npm uninstall package_name [eg: npm uninstall bootstrap]
+
+#) Removing(Uninstall) a package/Dependency: nuclear approach
+remove node modules folder and package-lock.json manually, then remove the package name from devendency list of package.json, then run the following command
+npm install
+
+#) To run a script: usual way
+node script_name =>[eg: node app.js]
+
+#) To run a script: when a command script is already mentioned in package.json
+npm run script_command_name [eg: npm run dev]
+
+**Special Note**
+npm test, npm start, npm restart, and npm stop are all aliases for npm run xxx.
+For all other scripts you define, you need to use the npm run xxx syntax.
+See the docs at https://docs.npmjs.com/cli/run-script for more information.
