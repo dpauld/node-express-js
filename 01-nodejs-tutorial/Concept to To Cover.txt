@@ -1,0 +1,9 @@
+1) Identity function; These callbacks are Identity function
+fetchBook()
+  .then((book) => formatBook(book))
+  .then((postscript) => print(postscript));
+
+to 
+fetchBook()
+  .then(formatBook)
+  .then(print);
