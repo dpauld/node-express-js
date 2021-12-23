@@ -1,0 +1,14 @@
+In most cases We USE Express in SERVER to do the following two things, to setup API or setup Template with Server Side Rendering.
+
+### API ###
+Application Programming Interface(API) is a software intermediary that is used to exchange data between two software/apps(eg: frontend sends/recieves data from backend).
+Think it like, It is nothing but lines of codes that is stored in a server and used to read data from database and then whenever the fronend or any other party requests(sends http request) for it, the server use that api to serve the data typically in JSON formate.
+- JSON
+- SEND DATA 
+- RES.JSON 
+
+### SSR ###
+Server Side Rendering(SSR) is a programming paradaign where server sends template html called as template engine that is used with data which has been fetched with API to make dynamic webpages.
+- TEMPLATE
+- SEND TEMPLATE
+-RES.RENDER()

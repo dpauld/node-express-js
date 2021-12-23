@@ -3,12 +3,13 @@ const path = require('path')
 const app = express()
 
 app.use(express.static('./public'))
-// app.get('/', (req, res)=> {
-//     res.sendFile(path.resolve(__dirname,'./navbar-app/index.html'))
-//     //#Other Optiones:
-//     //1. Adding to static assestts [used when asset is static]
-//     //2. Server Side Rendering(SSR) using Template Engine [used mostly when asset is dynamic] 
-// })
+app.get('/', (req, res)=> {
+    res.sendFile(path.resolve(__dirname,'./navbar-app/index.html'))
+    //#Optiones for serving a request:
+//     //1. Using sendFile method
+//     //2. Adding to static assestts [used when asset is static]
+//     //3. Server Side Rendering(SSR) using Template Engine [used mostly when asset is dynamic] 
+})
 app.get('/about', (req, res)=>{
     res.status(200).send('About Page')
 })
