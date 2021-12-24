@@ -1,31 +1,41 @@
 const express = require('express')
-const path = require('path')
 const app = express()
+const {products} = require('./data.js')
 
-app.use(express.static('./public'))
-// app.get('/', (req, res)=> {
-//     res.sendFile(path.resolve(__dirname,'./navbar-app/index.html'))
-//     //#Other Optiones:
-//     //1. Adding to static assestts [used when asset is static]
-//     //2. Server Side Rendering(SSR) using Template Engine [used mostly when asset is dynamic] 
-// })
-app.get('/about', (req, res)=>{
-    res.status(200).send('About Page')
+//for simplification, we are serving to the home page only
+app.get('/',(req,res)=>{
+    res.send('<h1>Home Page</h1><a href="./api/products">Products</a>')
 })
-//instead of responding with automatic response from express we can define our custome 404 response for all including get resource,post resource
+
+//we want to show all products but not each product details, like we see in real world
+app.get('/api/products',(req,res)=>{
+    const newProducts = products.map((product)=>{
+        const {id,name,image} = product
+        return {id,name,image}
+    })
+    res.json(newProducts)
+})
+
+//here we want to show single product with details
+//#Options: 1)Inefficient approach with specifying path for each product or 2)Efficient approach with Raout Parameter
+//1)Inefficient approach
+/* app.get('/api/products/1',(req,res)=>{
+    const singleProduct = products.find((product)=>product.id===1)
+    res.json(singleProduct)
+})
+ */
+//2)Effiecient approach, note: Route parameter always comes as string
+app.get('/api/products/:productID',(req,res)=>{
+    // console.log(req.params)
+    const {productID} = req.params 
+    const singleProduct = products.find((product)=>product.id===Number(productID))
+    res.json(singleProduct)
+})
+
 app.all('*', (req,res) => {
     res.status(404).send('Not avialable')
 })
-app.listen(5000, () =>{
-    console.log("server is listening")
+
+app.listen(5000, () => {
+    console.log('Server is listening on port 5000....')
 })
-
-//app.get
-//app.post
-//app.put
-//app.delete
-//app.all
-//app.use
-//app.listen
-
-//express.static : used for importing static assets, static assets are files that server don't need to change unlike the dynamic html template pages

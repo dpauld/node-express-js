@@ -4,6 +4,7 @@ const app = express()
 
 //when all the assets are static(eg:landing page), we can dump everything including static html and the site will run smoothly 
 app.use(express.static('./public'))
+//app.use('/static', express.static('public'))//Here static is a virtual path prefix, that does not exist in file system
 
 // app.get('/', (req, res)=> {
 //     res.sendFile(path.resolve(__dirname,'./navbar-app/index.html'))
