@@ -8,4 +8,4 @@
 
 5. **public** - this folder contains files(mainly to serve css,images, static html pages) used inside  *4-express-app.js* and  *5-express-all-static.js*
 
-6. **middlewares** - *logger.js*,  *loggerTime.js* and  *authorize.js* are middlewares which are used in files named 8 to 10 located inside final
+6. **middlewares** - *logger.js*,  *loggerTime.js* and  *authorize.js* are middlewares which are used in the files located in *final*-> *files with prefixes 8 to 10 in the names*.
