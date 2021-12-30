@@ -1,4 +1,4 @@
-## Which folder does what and How to use the resources of this folder,
+### Which folder does what and How to use the resources of this folder
 
 1. **http-in-depth** - Contains some example of node\'s http method
 
