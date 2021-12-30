@@ -46,6 +46,33 @@ app.get('/api/products/:productID/reviews/:reviewID',(req,res)=>{
     res.send(`<h2>A review(Id: ${reviewID}) for the product with (Id:${productID})</h2>`)
 })
 
+/*______Understanding Parameter Query:Usefull for filtering, searching, sorting_____*/
+//A reallife usage of hacker news API: https://hn.algolia.com/api
+app.get('/api/v1/products',(req,res)=>{
+    console.log(req.query)
+    const {searchKey, startingLetter,sort,pageLimit} = req.query
+
+    let filteredProducts = [...products]//created a new copy object
+    if(searchKey){//if not empty
+        filteredProducts = filteredProducts.filter((product)=>{
+            return product.name.includes(searchKey)
+        })
+    }
+    if(startingLetter){//if not empty
+        filteredProducts = filteredProducts.filter((product)=>{
+            return product.name.startsWith(startingLetter)
+        })
+    }
+    if(pageLimit){
+        filteredProducts = filteredProducts.slice(0,Number(pageLimit))
+    }
+    if(filteredProducts.length<1){
+        return res.status(200).send('<h2>No product matched your search</h2>')//here status code is not 404, the page exist but there is no product that matches, so 200.
+    }
+    // console.log(filteredProducts)
+    res.json(filteredProducts)
+})
+
 app.all('*', (req,res) => {
     res.status(404).send('Not avialable')
 })

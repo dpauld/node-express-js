@@ -6,7 +6,7 @@ const app = express()
 app.use(express.static('./public'))
 //app.use('/static', express.static('public'))//Here static is a virtual path prefix, that does not exist in file system
 
-// app.get('/', (req, res)=> {
+// app.get('/', (req, res)=> {//if there is any index.html in express static file then root get method does not execute
 //     res.sendFile(path.resolve(__dirname,'./navbar-app/index.html'))
 //     //#Optiones for serving a request:
 //     //1. Using sendFile method

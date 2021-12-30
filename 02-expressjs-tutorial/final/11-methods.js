@@ -1,3 +1,5 @@
+//this contains all the methods(get, post, put, delete) of form handeling including browser example and postman(find the postman name in the url) example. 
+
 const express = require('express')
 const app = express()
 let {people} = require('./data.js')
