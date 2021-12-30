@@ -2,8 +2,9 @@ const express = require('express')
 const path = require('path')
 const app = express()
 
-//when all the assets are static(eg:landing page), we can dump everything including static html and the site will run smoothly 
-app.use(express.static('./public'))
+//// Move the index.html from navbar app to public. When all the assets are static(eg:landing page), we can dump everything including static html and the site will run smoothly 
+app.use(express.static('./public'))// if ./navbar-app if index.html is not found.
+
 //app.use('/static', express.static('public'))//Here static is a virtual path prefix, that does not exist in file system
 
 // app.get('/', (req, res)=> {//if there is any index.html in express static file then root get method does not execute
