@@ -1,8 +1,10 @@
+## Which folder does what and How to use the resources of this folder,
+
 1. **http-in-depth** - Contains some example of node\'s http method
 
-2. **Final** - contains all the example files of express tutorial
+2. **final** - contains all the example files of express tutorial
 
-3. **methods-public** - this contains the frontend app of a form, which is used as a middleware inside the files named  *11-methods-\**, located inside the final folder to explain how to handle http methods(GET, POST, PUT, DELETE).
+3. **methods-public** - this contains the frontend app of a form, which is used as a middleware inside the files named  *11-methods-\**, located inside the *final* folder to explain how to handle http methods(GET, POST, PUT, DELETE).
 
 4. **navbar-app** - this contains html file, which is used inside  *4-express-app.js*
 
