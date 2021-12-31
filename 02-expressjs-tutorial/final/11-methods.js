@@ -80,4 +80,3 @@ app.listen(5000, () => {
 //so the difference is express.json() is a body parser for post/fetch request except html post form and express.urlencoded({extended: false}) is a body parser for html post form
 // 2) {extend:options} => [https://stackoverflow.com/a/50199038/7828981]
     // an example: https://stackblitz.com/edit/node-xa27zd?file=index.js
-// 3)
