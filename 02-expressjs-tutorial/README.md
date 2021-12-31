@@ -11,3 +11,7 @@
 5. **public** - this folder contains files(mainly to serve css,images, static html pages) used inside  *4-express-app.js* and  *5-express-all-static.js*
 
 6. **middlewares** - *logger.js*,  *loggerTime.js* and  *authorize.js* are middlewares which are used in the files located in *final*-> *files with prefixes 8 to 10 in the names*.
+
+7. **route** - contains router files that is used in *app.js* to set the route
+
+8. **controllers** - contains router controller files that is used in the files of *route* folders. The files inside controllers folder contains callbacks methods to handle requests.
