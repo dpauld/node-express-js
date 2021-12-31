@@ -1,3 +1,5 @@
+//app.js file for handling routes and controller as a mvc model
+
 const express = require('express')
 const app = express()
 
@@ -22,9 +24,3 @@ app.use('/login', auth)
 app.listen(5000, () => {
     console.log('Server is listening in port 5000')
 })
-
-///Readings:
-// 1) express.json() vs express.urlencoded({extended:false}) => [ https://stackoverflow.com/questions/23259168/what-are-express-json-and-express-urlencoded ] [https://stackoverflow.com/a/51844327/7828981]
-//so the difference is express.json() is a body parser for post/fetch request except html post form and express.urlencoded({extended: false}) is a body parser for html post form
-// 2) {extend:options} => [https://stackoverflow.com/a/50199038/7828981]
-    // an example: https://stackblitz.com/edit/node-xa27zd?file=index.js

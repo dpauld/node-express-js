@@ -57,7 +57,7 @@ app.post('/api/postman/people',(req,res) => {
 })
 
 //incase of update we expect the new value as well as an identification to update that specific element
-app.put('/api/postman/people/:id',(req,res) => {
+app.put('/api/people/:id',(req,res) => {
     const {id} = req.params
     const {name} = req.body 
     // console.log(req.params, id, name)
@@ -75,7 +75,7 @@ app.put('/api/postman/people/:id',(req,res) => {
 })
 
 //we not expecting a new value, only identification of the element to be deleted needed
-app.delete('/api/postman/people/:id',(req, res)=>{
+app.delete('/api/people/:id',(req, res)=>{
     const {id} = req.params
     const personExists = people.find((person)=>person.id===Number(id))
     console.log(personExists)
