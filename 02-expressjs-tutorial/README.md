@@ -42,9 +42,9 @@ app.use(express.json());
    });
    ```
 
-   Here we have 2 middleware functions for the same path. But you always gonna get the response from the first one. Because that is mounted first in the middleware stack and res.send will end the cycle.
+   Here, we have two middleware functions for the same path. But the code will send response from the first one. It happens because, in the middleware stack the first middleware is mounted first and `res.send()` will end the cycle, as a result it wont reach the second middleware.
 
-   But what if we always do not want the `"Hello World !!!!"` response back. For some conditions we may want the `"Hello Planet !!!!"` response. Let’s modify the above code and see what happens. Consider `Example 2`,
+   But what if we always do not want the `"Hello World !!!!"` response back. For some conditions we may want the `"Hello Planet !!!!"` response. This can be achieved by using `next()`, which will pass the execution to the second middleware. Now, let’s modify the above code and see what happens. Consider `Example 2`,
 
    ```javascript
    app.get('/hello', function (req, res, next) {
