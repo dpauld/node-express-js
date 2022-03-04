@@ -30,9 +30,8 @@ app.use(express.json());
 
 ### Concepts
 
-1. `next()`
-   `next()` is used to pass the execution to the next middleware.
-   Example 1:
+1. `next()` is used to pass the execution to the next middleware.
+   Consider the `Example 1` below,
 
    ```javascript
    app.get("/hello", function (req, res, next) {
@@ -45,9 +44,7 @@ app.use(express.json());
 
    Here we have 2 middleware functions for the same path. But you always gonna get the response from the first one. Because that is mounted first in the middleware stack and res.send will end the cycle.
 
-   But what if we always do not want the “Hello World !!!!” response back. For some conditions we may want the "Hello Planet !!!!" response. Let’s modify the above code and see what happens.
-
-   Example 2:
+   But what if we always do not want the `"Hello World !!!!"` response back. For some conditions we may want the `"Hello Planet !!!!"` response. Let’s modify the above code and see what happens. Consider `Example 2`,
 
    ```javascript
    app.get('/hello', function (req, res, next) {
@@ -63,5 +60,5 @@ app.use(express.json());
    });
    ```
 
-   The `next()` method called inside if gonna skip the first middleware function if the condition is true and invoke the next middleware function and you will have the "Hello Planet !!!!" response.
-   [Read This...](https://stackoverflow.com/questions/10695629/what-is-the-parameter-next-used-for-in-express) and [Read More..](https://stackoverflow.com/questions/8710669/having-a-hard-time-trying-to-understand-next-next-in-express-js)
+   The `next()` method called inside if gonna skip the first middleware function if the condition is true and invoke the next middleware function and you will have the `"Hello Planet !!!!"` response.
+   [Read This...](https://stackoverflow.com/questions/10695629/what-is-the-parameter-next-used-for-in-express) and [Read More...](https://stackoverflow.com/questions/8710669/having-a-hard-time-trying-to-understand-next-next-in-express-js)
