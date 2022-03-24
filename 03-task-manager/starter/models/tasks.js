@@ -1,3 +1,5 @@
+//This files defines the schema of Task collection(database table). Usually mongodb database does not have any structure, whereas in case of coding structure is important. These unstructuredness can be removed with Mongoose Schema  Each schema maps to a MongoDB collection and defines the shape or structure of the documents within that collection. This is how, Everything in Mongoose starts with a `Schema`.
+
 const mongoose = require("mongoose");
 
 //without validation

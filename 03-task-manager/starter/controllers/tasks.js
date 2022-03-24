@@ -84,7 +84,7 @@ const getTask = async (req, res) => {
 const deleteTask = async (req, res) => {
   try {
     const { id: taskId } = req.params;
-    const task = await Task.findOneAndDelete({ _id: taskId }); // findOneAndDelete()=> deletes the document and returns it vs findOneAndRemove()=> only deletes the document
+    const task = await Task.findOneAndDelete({ _id: taskId }); // findOneAndDelete()=> faster, as it uses the same mongodb function vs findOneAndRemove()=> little slow, as wraps up to another mongodb function
     if (!task) {
       res.status(404).json({ msg: `There is no task with id: ${taskId}` });
     }
@@ -99,7 +99,7 @@ const updateTask = async (req, res) => {
   try {
     const { id: taskId } = req.params;
     const task = await Task.findOneAndUpdate({ _id: taskId }, req.body, {
-      new: true, // default value is false, if its false returns the document with old values. otherwise returns updated one.
+      new: true, // default value is false. If its false returns the document with old values. otherwise returns updated one.
       runValidators: true, //if runValidators is false there will be no validation checking
     }).exec();
     if (!task) {

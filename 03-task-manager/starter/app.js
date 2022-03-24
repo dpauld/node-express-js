@@ -11,7 +11,7 @@ app.get("/hello", (req, res) => {
 
 //middlewares
 app.use(express.static("./public"));
-//parse json middleware,
+//parse json middleware, //order of placing it matters
 app.use(express.json());
 
 app.use("/api/v1/tasks", tasks);

@@ -43,13 +43,32 @@ NoSQL, Non Relational DB, Stores in JSON Formate, Database is stored in ATLAS cl
 2. There is no set structure in a collection in Mongo Database. That means a document(or row) in a collection can have different amount and different data types and their values. But using different structure for different document is not a good practice. An example: ![Store database in MongoDB](./READMEImages/mongoDatabaseStructure.PNG)
 
 3. We use mongoose schema for having a structured set of documents
-4. to connect with database we use a link like the following: [mongodb+srv://user:<password>@nodeexpressprojects.thetp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority]
-   `myFirstDatabase` - change this to the database, If you manually created a database already. If you did not create already just use the databse name as you need, Mongo will automatically create one after connecting and then adding some item.
+4. to connect with database we use a connection string like the following: [mongodb+srv://user:<password>@nodeexpressprojects.thetp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority]
+   `myFirstDatabase` - change this to the database, If you manually created a database already. If you did not create one already, just use the databse name as you need, Mongo will automatically create one after connecting and then adding some item.
    `user` - change the user name to yours.
    `<password>` - add password of that user.
 5. `mongoos.connect()` `parameters` - What they do? useNewUrlParse, useUnifiedTopology, useCreateIndex(deprecated), useFindAndModify(deprecated) etc
-6. `mongoos.schema()`
-7. [`mongoos.model()`](https://mongoosejs.com/docs/models.html) - Models are fancy constructors compiled from Schema definitions. An instance of a model is called a document. Models are responsible for creating and reading documents from the underlying MongoDB database.
+6. `mongoos.schema()` - Everything in Mongoose starts with a `Schema`. Each schema maps to a MongoDB collection and defines the shape or structure of the documents within that collection. Usually mongodb database does not have any structure, whereas in case of coding structure is important.
+
+```javascript
+import mongoose from "mongoose";
+const { Schema } = mongoose;
+
+const blogSchema = new Schema({
+  title: String, // String is shorthand for {type: String}
+  author: String,
+  body: String,
+  comments: [{ body: String, date: Date }],
+  date: { type: Date, default: Date.now },
+  hidden: Boolean,
+  meta: {
+    votes: Number,
+    favs: Number,
+  },
+});
+```
+
+7. [`mongoose.model()`](https://mongoosejs.com/docs/models.html) - To use our `schema` definition, we need to convert it into a `Model` we can work with. To do so, we pass it into `mongoose.model(modelName, schema)`. An instance of a model is called a document. Models are responsible for creating and reading documents from the underlying MongoDB database.
 
 ```javascript
 const Task = mongoose.model("Task", TaskSchema);
@@ -57,7 +76,7 @@ const Task = mongoose.model("Task", TaskSchema);
 
 The first argument is the singular name of the collection your model is for. **_Mongoose automatically looks for the plural, lowercased version of your model name._** Thus, for the example above, the model Task is for the tasks collection in the database.
 
-**_Note_**: The `.model()` function makes a copy of `schema`. Make sure that you've added everything you want to `schema`, including hooks, before calling .`model()`!
+**_Note_**: The `.model()` function makes a copy of `schema`. Make sure that you've added everything you want in `schema` definition, including hooks, before calling `.model()`!
 
 An instance of a model is called a document. Creating them and saving to the database is easy.
 
@@ -66,7 +85,34 @@ const taskShakeNBake = new Task({ name: "shakeNbake" });
 // there are other ways to create as well
 ```
 
-8. Any extra property values passed to the database that is not part of schema definition will be ignored. For example,
+8. Creating A document or adding a new item into the database collection
+
+```javascript
+//without catching the error
+const task = await Task.create(req.body);
+//or
+const task = await Task.create({
+  name: req.body.name,
+  completed: req.body.completed,
+});
+
+//Alternative approach to handle error
+const task = await Task.create(req.body, function (error, name, completed) {
+  if (error) return res.status(500).json(error);
+  // saved!
+});
+
+//or try catch to handle the error
+try {
+  const task = await Task.create(req.body);
+  res.status(201).json({ task }); //201 for created
+} catch (error) {
+  res.status(500).json({ msg: error });
+  // res.status(501).json(error.errors.name.message);
+}
+```
+
+9. **_ Any extra property values passed to the database that is not part of `schema` definition will be ignored _**. For example,
    If schema is like so,
 
 ```javascript
@@ -87,7 +133,7 @@ But passed extra properties such as `random` and `amount` will be ignored. Datab
 }
 ```
 
-9. **_ If you leave a property value undefined and not even assign a default value to a property, mongodb will ignore that property _** and will not add that property to the collection even if it was defined the schema. We add `validation` to avoid these issues.
+10. **_ If you leave a property value undefined and not even assign a default value to a property, mongodb will ignore that property _** and will not add that property to the collection even if it was defined the schema. We add `validation` to avoid these issues.
 
 ```javascript
 {
@@ -96,28 +142,36 @@ But passed extra properties such as `random` and `amount` will be ignored. Datab
 }
 ```
 
-10. We can add `validation` when defining schema inside schema method.
+11. We can add `validation` when defining schema inside schema method.
     Q) handling promise error with passing error handling paramater callback inside create method
-11. [Queries](https://mongoosejs.com/docs/queries.html): Mongoose `models` provide several static helper functions for **_ CRUD _** operations. Each of these functions(such as, model.find(), model.findbyId()) returns a mongoose `Query` object.
+12. [Queries](https://mongoosejs.com/docs/queries.html): Mongoose `models` provide several static helper functions for **_ CRUD _** operations. Each of these functions(such as, model.find(), model.findbyId()) returns a mongoose `Query` object.
     Mongoose has a `Query` object which has a `.then()` method like promise. However, **_ `query` object is not a promise. _**
     [Reading on Async Await](http://thecodebarbarian.com/common-async-await-design-patterns-in-node.js.html)
     Q. Since the Query object returned by helper functions is not promise, why do we use async-await?
     [Awaiting a non-promise effect](https://stackoverflow.com/questions/55262996/does-awaiting-a-non-promise-have-any-detectable-effect) and
     (Any non promise converted to promise)[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await#conversion_to_promise]
-12. Queries: Find()
-13. Queries: .findOne().
-14. `.exec()` in mongoose: `.exec()` returns a full fledge promise(mentioned in the second line)[https://mongoosejs.com/docs/promises.html#queries-are-not-promises], whereas just using normal queries returns a thenable object. Another benefit is with `.exec()` stack tracing is better. [read](https://mongoosejs.com/docs/promises.html#should-you-use-exec-with-await)
+13. Queries: **_ `Model.find()` _**
+    `Model.find()` method always **_returns an empty array if no item is found_**, does not return null. To check if an array is empty or not we can use `if(!array.length)`.
+14. Queries: `Model.findById()`
+    `Model.findById()` method **_returns null if no item is found_**, does not return empty array
+15. Queries: `.findOne()`
+    `Model.findOne()` method **_returns null if no item is found_**, does not return empty array
+16. `.exec()` in mongoose: `.exec()` returns a full fledge promise(mentioned in the second line)[https://mongoosejs.com/docs/promises.html#queries-are-not-promises], whereas just using normal queries returns a thenable object. Another benefit is with `.exec()` stack tracing is better. [read](https://mongoosejs.com/docs/promises.html#should-you-use-exec-with-await)
     Q. What does `.exec()` method do in mongoose findOne method?
     Answer: [read](https://stackoverflow.com/questions/31549857/mongoose-what-does-the-exec-function-do)
-15. `findOneAndDelete()` vs `findOneAndRemove() `
-    `findOneAndDelete()` deletes the document and returns the deleted document. Whereas `findOneAndRemove()` only deletes the document.
+17. `Model.findOneAndDelete()`
+    Finds a matching document, removes it, and passes the found document (if any) to the callback. **_ `findOneAndDelete` returns null if item is not found. _**
+18. `findOneAndDelete()` vs `findOneAndRemove() `
+    `Model.findOneAndDelete()` function differs slightly from `Model.findOneAndRemove()` in that mongoose `findOneAndRemove()` becomes a MongoDB `findAndModify()` command, as opposed to a mongoose `findOneAndDelete()` command. For most mongoose use cases, this distinction is purely pedantic. You should use findOneAndDelete() unless you have a good reason not to.
+    Source: [mongoose documentation on delete](https://mongoosejs.com/docs/api.html#model_Model.findOneAndDelete) or [delete vs remove stackoverflow](https://stackoverflow.com/questions/31549857/mongoose-what-does-the-exec-function-do)
+19. `findOneAndUpdate()`
 
 # Dotenv
 
-This package is used have some secret environment setup for security reason.
+This package is used to have some secret environment setup for security reason.
 
 1. A `.env` file stores the data
-2. to access the data inside `.env` from another file we use the follwing code
+2. to access the data inside `.env` file from another package or file we use the follwing code that uses `dotenv` package
 
    ```javascript
    require("dotenv").config(); // to import the data to that file
@@ -128,6 +182,32 @@ This package is used have some secret environment setup for security reason.
    `process.env` now has the keys and values defined in .env file.
 
 3. more in [npm dotenv package](https://www.npmjs.com/package/dotenv)
+
+# Which folder does what?
+
+1. routes -
+2. controller -
+3. db - contains the connection and all of database setup
+4. models - contains the schema or definitions of collections
+
+# Package used in this project
+
+1. express
+2. axios
+3. mongoose
+4. dotenv
+5. nodemon (development dependecy)
+
+# Builtin Middlewares used
+
+1. For parsing json, order of placing matters
+
+```javascript
+//parse json middleware,
+app.use(express.json());
+```
+
+2. For other
 
 # Questions?
 

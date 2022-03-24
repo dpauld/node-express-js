@@ -1,3 +1,4 @@
+//this is a errror handler middleware that activates when the user requests for page that does not exist.
 const notFound = (req, res) => {
   res
     .status(404)
