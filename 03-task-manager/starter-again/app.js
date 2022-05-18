@@ -3,6 +3,8 @@ require("dotenv").config();
 const { connectDB } = require("./db/connect");
 const app = express();
 const tasks = require("./routes/tasks");
+
+//Exceptions middlwares
 const notFound = require("./middlewares/notFound");
 const errorHandlerMiddleware = require("./middlewares/error-handler");
 
