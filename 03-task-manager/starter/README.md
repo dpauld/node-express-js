@@ -185,7 +185,7 @@ This package is used to have some secret environment setup for security reason.
 
 # Which folder does what?
 
-1. routes - contains router files that is used in app.js to set the route. Example of Router files: `auth.js` contains all the codes to route controller function(eg. `javascript getTask() `, `deleteTask()`) related to user authentication that will handle all the get, post, delete and other requests. Also `task.js` contains all the codes to route to all the get, post, delete controller function related to tasks. See the Jobs-API project for better understanding.
+1. routes - contains router files that is used in app.js to set the route. Example of Router files: `auth.js` contains all the codes to route controller function(eg. `.getTask() `, `.deleteTask()`) related to user authentication that will handle all the get, post, delete and other requests. Also `task.js` contains all the codes to route to all the get, post, delete controller function related to tasks. See the Jobs-API project for better understanding.
 2. controllers - contains router controller files that is used in the files of route folders. The files inside controllers folder contains callbacks methods known as controller function to handle get, post or other requests. For example `auth.js` contains all the callback functions to deliver the get, post, delete or other request related to user authentication. Also `task.js` contains all the callback functions to deliver the get, post, delete or other request related to task.
 3. middlewares - contains all the user defined middlewares.
 4. errors - contains all the user defined errors. Each of them will deliver custom message based on different error.
